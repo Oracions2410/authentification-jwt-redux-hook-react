@@ -7,7 +7,6 @@ import {
 } from './types'
 
 import AuthService from '../services/auth.service'
-import authService from '../services/auth.service'
 
 
 /**
@@ -20,6 +19,8 @@ import authService from '../services/auth.service'
 export const register = (username, email, password, confirmPassword) => (dispatch) => {
     return AuthService.register(username, email, password, confirmPassword)
         .then(response => {
+            console.log('>>>>>>>>>>>>>>>>-------', response)
+
             dispatch({
                 type: REGISTER_SUCCESS
             })
@@ -33,6 +34,7 @@ export const register = (username, email, password, confirmPassword) => (dispatc
 
         },
             error => {
+                console.log('<<<<<<<<<<<<<<<<', error.response)
                 dispatch({
                     type: REGISTER_FAIL
                 })

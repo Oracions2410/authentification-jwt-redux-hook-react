@@ -32,16 +32,16 @@ const Login = (props) => {
 
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
-    const [loading, setLoading] = useState('')
+    const [loading, setLoading] = useState(false)
 
-    const { isLoggedIn } = useSelector(state => state.auth)
+    const { loggedIn } = useSelector(state => state.auth)
     const { message } = useSelector(state => state.message)
 
     const dispatch = useDispatch()
 
 
-    if (isLoggedIn) {
-        return <Redirect to="/profile" />
+    if (loggedIn) {
+        return <Redirect to="/home" />
     }
 
     /**
@@ -63,10 +63,10 @@ const Login = (props) => {
 
         form.current.validateAll()
 
-        if (checkBtn.current._errors.length === 0) {
+        if (checkBtn.current.context._errors.length === 0) {
             dispatch(loginAction(login, password))
                 .then(() => {
-                    props.history.push('/profile')
+                    props.history.push('/home')
                     window.location.reload()
                 })
                 .catch(() => {
@@ -83,7 +83,7 @@ const Login = (props) => {
         <div className="col-md-12">
             <div className="card card-container">
 
-                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                <img src={require('../assets/images/avatar_2x.png')}
                     alt="profile-img"
                     className="profile-img-card"
                 />
@@ -119,15 +119,18 @@ const Login = (props) => {
                     {/* Submit button */}
                     <div className="form-group">
                         <button className="btn btn-primary btn-block" disabled={loading}>
-                            {loading && (<span className="spinner spinner-border-sm"></span>)}
-                            <span>LOGIN</span>
+                            {loading ?
+                                (<span className="spinner-border spinner-border-sm"></span>)
+                                : (
+                                    <span>LOGIN</span>
+                                )}
                         </button>
                     </div>
 
                     {/* Show errors message */}
                     {message && (
-                        <div class="form-group">
-                            <div class="alert alert-danger" role="alert">{message}</div>
+                        <div className="form-group">
+                            <div className="alert alert-danger" role="alert">{message}</div>
                         </div>
                     )}
 

@@ -18,46 +18,10 @@ import { history } from './helpers/history'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import { Test } from './Test'
-
-
-
-// class App extends React.Component {
-
-//   constructor(props ) {
-//     super(props)
-//     console.log('construction.....')
-//   }
-
-//   state = {
-//     counter: 0,
-//     test: new Test()
-//   }
-
-
-//   render() {
-//     const increment = (value) => this.setState({ counter: ++value })
-
-//     return <>
-//       <button onClick={() => increment(this.state.counter)}>{this.state.counter}</button>
-//     </>
-//   }
-
-
-
-// }
-
+import './App.css'
 
 
 function App() {
-
-
-
-  //const [test, setTest] = useState()
-  const [counter, setCounter] = useState(0)
-
-
-
 
   const [showModeratorBord, setShowModeratorBord] = useState(false)
   const [showAdminBord, setShowAdminBord] = useState(false)
@@ -68,32 +32,24 @@ function App() {
 
   useEffect(() => {
 
-    console.log('...executed....')
-    const test = new Test()
-    test.$o = 34
-
-    console.log(test.$o)
-
-    test.$o = 4
-
-    console.log(test.$o)
-
-    test.$o = 6
-
-    console.log(test.$o)
-
-
     history.listen((location) => {
       dispatch(clearMessage())
     })
+
   }, [dispatch])
 
-  useEffect(() => {
-    if (currentUser) {
-      setShowModeratorBord(currentUser.roles.includes('ROLE_MODERATOR'))
-      setShowAdminBord(currentUser.roles.includes('ROLE_ADMIN'))
-    }
-  })
+
+
+  // useEffect(() => {
+
+  //   if (currentUser) {
+  //     setShowModeratorBord(currentUser.roles.includes('ROLE_MODERATOR'))
+  //     setShowAdminBord(currentUser.roles.includes('ROLE_ADMIN'))
+  //   }
+
+  // }, [currentUser])
+
+
 
   const logOut = () => dispatch(logout())
 
@@ -126,26 +82,35 @@ function App() {
               </li>
             )}
 
-            {currentUser && (
-              <li className="nav-item">
-                <Link to={'/profile'}>Profile</Link>
-              </li>
+          </div>
+
+          {currentUser ?
+            (
+              <div className="navbar-nav ml-auto">
+
+                <li className="nav-item">
+                  <Link to={'/profile'} className="nav-link">{currentUser.username}</Link>
+                </li>
+
+                <li>
+                  <a href="/login" onClick={logOut} className="nav-link">Log Out</a>
+                </li>
+
+              </div>
+            ) :
+
+            (
+              <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to={'/login'} className="nav-link">Log in</Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to={'/register'} className="nav-link">Sign up</Link>
+                </li>
+              </div>
             )}
 
-          </div>
-
-
-          <div className="navbar-nav ml-auto">
-
-            <li className="nav-item">
-              <Link to={'/login'} className="nav-link">Login</Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to={'/register'} className="nav-link">Sign up</Link>
-            </li>
-
-          </div>
 
         </nav>
       </div>
@@ -162,17 +127,7 @@ function App() {
           <Route path="/admin" component={Admin} />
           <Route path="profile" component={Profile} />
 
-
         </Switch>
-
-
-
-
-        {/* <button onClick={() => setCounter(counter + 1)} className="btn btn-primary btn-block">{counter}</button> */}
-
-
-
-
       </div>
 
     </Router >
