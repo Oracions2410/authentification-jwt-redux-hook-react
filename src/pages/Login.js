@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react'
 import { Redirect } from 'react-router-dom'
-import { useSelector, useDispatch } from 'redux-thunk'
+import { useSelector, useDispatch } from 'react-redux'
 
-import Form from 'react-validation/form'
-import Input from 'react-validation/input'
-import CheckButton from 'react-validation/Buttons'
+import Form from 'react-validation/build/form'
+import Input from 'react-validation/build/input'
+import CheckButton from 'react-validation/build/button'
 
 
 import { login as loginAction } from '../actions/auth'
@@ -97,7 +97,7 @@ const Login = (props) => {
                             type="text"
                             name="login"
                             value={login}
-                            onChange={handleChange(e, setLogin)}
+                            onChange={(e) => handleChange(e, setLogin)}
                             className="form-control"
                             validations={[required]}
                         />
@@ -110,7 +110,7 @@ const Login = (props) => {
                             type="password"
                             name="password"
                             value={password}
-                            onChange={handleChange(e, setPassword)}
+                            onChange={(e) => handleChange(e, setPassword)}
                             className="form-control"
                             validations={[required]}
                         />

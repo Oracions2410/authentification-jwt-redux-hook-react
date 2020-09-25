@@ -54,7 +54,7 @@ export const register = (username, email, password, confirmPassword) => (dispatc
  * @param {*} password 
  */
 export const login = (login, password) => (dispatch) => {
-    return uthService.login(login, password)
+    return AuthService.login(login, password)
         .then(data => {
 
             dispatch({

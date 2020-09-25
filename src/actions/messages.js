@@ -5,6 +5,6 @@ export const setMessage = (message) => ({
     payload: message
 })
 
-export const CLEAR_MESSAGE = () => ({
+export const clearMessage = () => ({
     type: CLEAR_MESSAGE
 })
